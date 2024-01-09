@@ -20,3 +20,33 @@ Image Optimization
 -Zero config tool
 -tree shaking - remove unused code for you
 -Diffrent dev and prod bundles
+
+
+
+#Namaste FoodStarApp Planning on what we want to have in our app- The Master Plan!
+
+---Header
+-Logo
+-Nav Items
+
+
+---Body
+-Search
+-Restaurant Container
+-Restaurant Card
+-Img
+-Name of Res,Ratings,Cuisine,deliverytime, cost for two
+
+
+---Footer
+-Copyright
+-Links
+-Address
+-Contact
+
+
+Two types of export and import :
+
+1. Default Export/Import -> export default Component  / import Component from "path"
+2. Named Export  -> export const componet / import {Component} from "path";
+
