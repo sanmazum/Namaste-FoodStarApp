@@ -50,3 +50,9 @@ Two types of export and import :
 1. Default Export/Import -> export default Component  / import Component from "path"
 2. Named Export  -> export const componet / import {Component} from "path";
 
+
+#Routing in WebApps
+
+1. Client Side Routing  -> Namsate Food Star App is a single paged React application and we are doing client side routing
+2. Server Side Routing  -> When we actually make a network call and get the data from server and refresh the whole page.
+
