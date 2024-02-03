@@ -25,10 +25,6 @@ class About extends React.Component {
           name={"First (class)"}
           location={"Dehradun (class)"}
         />
-         <UserClass
-          name={"Second (class)"}
-          location={"Dehradun (class)"}
-        />
       </div>
     );
   }

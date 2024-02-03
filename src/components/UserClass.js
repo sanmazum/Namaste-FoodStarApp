@@ -9,43 +9,73 @@ class UserClass extends React.Component {
     // creating state in class based components earlier when there were no hooks
 
     this.state = {
-      count: 0,
-      count2 :0 
+      userInfo: {
+        name: "Dummy",
+        location: "Default",
+        avatar_url: "http://dummy.com",
+      },
     };
 
-    console.log(this.props.name + "Child Constructor")
+    // console.log(this.props.name + "Child Constructor");
 
     // console.log(props);
   }
-  componentDidMount(){
-    console.log ( this.props.name + "child Component Did Mount")
-    //Api calls are done in class baased component here , and fill the data inside the component and will re render the component 
+  async componentDidMount() {
+    // console.log(this.props.name + "child Component Did Mount");
+    //Api calls are done in class baased component here , and fill the data inside the component and will re render the component
+
+    const data = await fetch("https://api.github.com/users/sanmazum");
+    const json = await data.json();
+
+    this.setState({
+      userInfo: json,
+      avatar_url: "https://avatars.githubusercontent.com/u/155097600?v=4",
+    });
+
+    console.log(json);
   }
+
+  componentDidUpdate() {
+    console.log("Component did Update");
+  }
+
+  componentWillUnmount(){
+    console.log("Component Will unmounted")
+    // unmount means When it will be gone from UI, when we move to any other page. This completes the React LifeCycle methods.
+  }
+
+  /* What exactly happened when we actually made an API call - Let's understand the lifecycle method
+  
+  -------MOUNTING----------
+  constructor (loaded with Dummy Data)
+  Render(dummy)
+   -<HTML Dummy>
+  Component Did Mount
+  <API Call>
+  <this.setState> --> State variable is now updated
+
+
+  ----UPDATE CYCLE----
+  render(API Data)
+  <HTML (loadednew API Data)
+  componentDidUpdate
+  
+  
+  */
+
+
+
   render() {
     // destructuring the props in class based components
-    const { name, location } = this.props;
-    // destructuring the state in class based components
-    const { count, count2} = this.state;
+    const { name, location, avatar_url } = this.state.userInfo;
 
-    console.log(this.props.name + "Child render")
+    console.log(this.props.name + "Child render");
     return (
       <div className="user-card">
-        <h1> Count = {count}</h1>
-        <h1> Count2 = {count2}</h1>
-        <button
-          onClick={() => {
-            // NEVER UPDATE THE STATE VARIABLES DIRECTLY -> this.count= this.count +1 --> It will Create inconsistencies in the code
-            this.setState({
-              count: this.state.count + 1,
-              count2: this.state.count2 + 1,
-            });
-          }}
-        >
-          Count increase
-        </button>
         <h2>Name :{name} </h2>
+        <img src={avatar_url} />
         <h3> Location : {location}</h3>
-        <h4> contact : @akshaymarch7</h4>
+        <h4> contact:@sanmazum</h4>
       </div>
     );
   }
