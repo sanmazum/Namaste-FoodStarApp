@@ -1,10 +1,13 @@
 import useRestaurantMenu from "../utils.js/useRestaurantMenu";
 import Shimmer from "./Shimmer";
 import { useParams } from "react-router-dom";
-import { MENU_API } from "../utils.js/constants";
+import { MENU_API } from "../utils.js/Constants";
+import RestaurantCategory from "./RestaurantCategory";
+import { useState } from "react";
 
 const RestaurantMenu = () => {
   // const [resInfo, setResInfo] = useState(null);
+  const [showIndex, setShowIndex] = useState();
 
   const { resId } = useParams();
 
@@ -27,24 +30,33 @@ const RestaurantMenu = () => {
   const { name, cuisines, costForTwoMessage } =
     resInfo?.cards[0]?.card?.card?.info;
 
+  //itemcards is coming from the key present in the MENU_API
   const { itemCards } =
     resInfo?.cards[2]?.groupedCard?.cardGroupMap?.REGULAR?.cards[2]?.card?.card;
 
-  console.log(itemCards);
+  // console.log(resInfo?.cards[2]?.groupedCard?.cardGroupMap?.REGULAR?.cards);
+
+  const categories =
+    resInfo?.cards[2]?.groupedCard?.cardGroupMap?.REGULAR?.cards.filter(
+      (c) =>
+        c.card?.card?.["@type"] ===
+        "type.googleapis.com/swiggy.presentation.food.v2.ItemCategory"
+    );
+
+  // console.log(categories);
 
   return (
-    <div className="menu">
-      <h1>{name}</h1>
-      <h2>{cuisines.join(",")}</h2>
-      <h3>{costForTwoMessage}</h3>
-      <h3>Menu Items</h3>
-      <ul>
-        {itemCards.map((item) => (
-          <li key={item.card.info.id}>
-            {item.card.info.name} - {item.card.info.price / 100} ₹
-          </li>
-        ))}
-      </ul>
+    <div className=" text-center ">
+      <h1 className="font-bold my-6 text-2xl">{name}</h1>
+      <h2 className="font-bold text-2xl">{cuisines.join(",")}</h2>
+      {categories.map((category, index) => (
+        <RestaurantCategory
+          key={category?.card?.card.title}
+          data={category?.card?.card}
+          showItems={index === showIndex ? true : false}
+          setShowIndex={() => setShowIndex(index)}
+        />
+      ))}
     </div>
   );
 };

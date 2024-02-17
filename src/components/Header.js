@@ -1,35 +1,42 @@
-import { LOGO_URL } from "../utils.js/constants";
-import { useState } from "react";
+import { LOGO_URL } from "../utils.js/Constants";
+import { useState, useContext } from "react";
 import { Link } from "react-router-dom";
 import useOnlineStatus from "../utils.js/useOnlineStatus";
+import UserContext from "../utils.js/UserContext";
 
 const Header = () => {
   const [btnNameReact, setbtnNameReact] = useState("Login");
 
   const onlineStatus = useOnlineStatus();
 
+  const { loggedInUser } = useContext(UserContext); // extracting the data from the context that we created with the help of useContext
+
+  console.log(loggedInUser);
+
   return (
-    <div className="header">
+    <div className="flex justify-between bg-pink-200 shadow-lg lg:bg-green-300 sm:bg-yellow-400">
       <div className="logo-container">
-        <img className="logo" src={LOGO_URL} />
+        <img className="w-56" src={LOGO_URL} />
       </div>
-      <div className="nav-items">
-        <ul>
-          <li>Online Status : {onlineStatus ? "✅" : "🔴"}</li>
-          <li>
-            <Link to="/">Home</Link>{" "}
+      <div className="flex items-center">
+        <ul className="flex p-4 m-4">
+          <li className=" px-4">
+            Online Status : {onlineStatus ? "✅" : "🔴"}
           </li>
-          <li>
-            <Link to="/about">About Us</Link>
+          <li className="px-4">
+            <Link to="/"> Home </Link>
           </li>
-          <li>
-            <Link to="/contact">Contact Us</Link>
+          <li className="px-4">
+            <Link to="/about"> About Us </Link>
           </li>
-          <li>
-            <Link to="/cart">Cart</Link>
+          <li className="px-4">
+            <Link to="/contact"> Contact Us </Link>
           </li>
-          <li>
-            <Link to="/grocery">Grocery</Link>
+          <li className="px-4">
+            <Link to="/cart"> Cart </Link>
+          </li>
+          <li className="px-4">
+            <Link to="/grocery"> Grocery </Link>
           </li>
           <button
             className="login-btn"
@@ -42,6 +49,9 @@ const Header = () => {
           >
             {btnNameReact}
           </button>
+          <li className="px-4 font-bold">
+            <Link to="/cart">{loggedInUser}</Link>
+          </li>
         </ul>
       </div>
     </div>
